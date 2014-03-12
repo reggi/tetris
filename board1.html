@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Tetris</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body{margin:0px;}
+    .piece{overflow:hidden;position:absolute;}
+    .piece .square{width:35px;height:35px;border:5px solid transparent}
+    .piece .margin.top{margin-top:-5px;}
+    .piece .margin.right{margin-right:-5px;}
+    .piece .margin.bottom{margin-bottom:-5px;}
+    .piece .margin.left{margin-left:-5px;}
+    .piece .trim{border:5px solid #000000}
+    .piece .trim.blue{background-color:#4600F8}
+    .piece .trim.sky{background-color:#74CAFD}
+    .piece .trim.green{background-color:#00FF2B}
+    .piece .trim.yellow{background-color:#F7FF34}
+    .piece .trim.orange{background-color:#F96520}
+    .piece .trim.red{background-color:#FB001B}
+    .piece .trim.purple{background-color:#D200FC}
+    .piece .trim.salmon{background-color:#FFA07A;}
+    .piece.g3x2 {width:125px;height:85px;}
+    .piece.g3x2 .row{width:125px;overflow:hidden;}
+    .piece.g3x2 .row.one{margin-bottom:-5px;}
+    .piece.g3x2 .row .square{float:left;}
+    .piece.g2x3 {width:85px;height:125px;}
+    .piece.g2x3 .column{height:125px;float:left;}
+    .piece.g2x3 .column.one{margin-right:-5px;}
+    .piece.g2x2 {height:85px;width:85px;}
+    .piece.g2x2 .unit{height:90px;float:left;}
+    .piece.g2x2 .unit.one{margin-right:-5px;}
+    .piece.g4x1{width:165px;height:45px;}
+    .piece.g4x1 .square{float:left;display:inline;}
+    .piece.g1x4{width:45px;height:165px;}
+    #pieces{display:none;}
+    #field{display:none;height:10000px;width:925px;position:relative;}
+    #grid{display:block;width:2000px;margin:auto;position:absolute;}
+    .piece.long{margin-bottom:-5px;position:relative;}
+    .piece.long .square{float:left;}
+    .fixed{position:fixed;}
+    
+    #movement1{position:fixed;}
+    #movement2{top:120px}
+    #movement3{top:320px;left:80px}
+    #movement4{top:80px;left:120px;}
+    #movement5{top:200px;left:120px;}
+    #movement6{top:200px;left:240px;}
+    #movement7{top:320px;left:160px}
+    #movement8{top:280px;left:0px;}
+    #movement9{top:360px;left:360px;}
+    #movement10{top:400px;left:480px;}
+    #movement11{top:520px;left:40px;}
+    #movement12{top:680px;left:0px;}
+    #movement13{top:40px;left:320px;}
+    #movement14{top:480px;left:240px;}
+    #movement15{top:120px;left:400px;}
+    #movement16{top:240px;left:400px;}
+    #movement17{top:40px;left:480px;}
+    #movement18{top:120px;left:600px;}
+    #movement19{top:200px;left:520px;}
+    #movement20{top:300px;left:720px;display:none;}
+    #movement21{top:0;left:720px;position:fixed;}
+    #movement22{top:480px;left:120px;}
+    #movement23{top:600px;left:200px;}
+  </style>
+</head>
+<body>
+ 
+<div id="grid">
+    <div class="piece long grid-row">
+      <div class="salmon square trim margin right grid-cell"></div><!--end .piece.long .square-->
+    </div><!--end .piece.long-->
+</div><!--end #grid-->
+
+
+
+<div id="field">
+
+</div><!--end #field-->
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.4.min.js"><\/script>')</script>
+  <script>
+
+    function fixedtop(element,boxes){
+      var top = $(element).offset().top - parseFloat($(element).css('marginTop').replace(/auto/, 0));
+      $(window).scroll(function (event) {
+        // what the y position of the scroll is
+        var the_top = parseFloat($(element).css('top').replace(/auto/, 0));        
+
+        var headway = 40 * boxes;        
+        var y = $(this).scrollTop() + headway;
+ 
+        // whether that's below the form
+        if (y >= top) {
+          // if so, ad the fixed class
+          $(element).addClass('fixed').css('top',headway+'px');
+        } else {
+          // otherwise remove it
+          $(element).removeClass('fixed').attr('style','');
+        }
+      });
+    }
+
+
+(function( $ ){
+  $.fn.douplicate = function( many ) {
+    var capture = this.parent().html();
+    var cellString = '';
+    for (i=0;i<=(many-1);i++){
+      cellString += capture;
+    }
+    this.parent().html(cellString);
+  };
+})( jQuery );
+
+
+$(document).ready(function(){
+  $('.grid-cell').douplicate(45);
+  $('.grid-row').douplicate(15);
+});
+
+
+  </script>
+</body>
+</html>
